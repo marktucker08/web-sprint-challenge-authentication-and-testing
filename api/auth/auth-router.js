@@ -6,7 +6,7 @@ const { JWT_SECRET } = require('../secrets')
 const { validateAuthBody, uniqueUser, usernameExists } = require('../middleware/validation')
 
 
-router.post('/register', (req, res, next) => {
+router.post('/register', validateAuthBody, uniqueUser, (req, res, next) => {
 
   let { username, password } = req.body
 

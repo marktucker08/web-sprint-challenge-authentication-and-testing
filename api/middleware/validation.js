@@ -8,8 +8,19 @@ const validateAuthBody = (req, res, next) => {
     }
 }
 
-const uniqueUser = (req, res,next) => {
-    next()
+const uniqueUser = async (req, res, next) => {
+    try {
+        const [user] = await User.findBy({ username: req.body.username })
+        if (user) {
+          next({ status: 401, message: "username taken" })
+        }
+        else {
+          next()
+        }
+      }
+      catch(err) {
+        next(err)
+        }
 }
 
 const usernameExists = async (req, res, next) => {
