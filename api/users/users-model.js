@@ -10,13 +10,13 @@ function findBy(filter) {
  
     return db('users')
     .where(filter)
-    .orderBy('user_id');
+    .orderBy('id');
 }
 
-function findById(user_id) {
+function findById(id) {
   
     return db('users')
-        .where('user_id', user_id).first()
+        .where('id', id).first()
     
 }
 
