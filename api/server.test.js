@@ -52,12 +52,14 @@ describe('/api/jokes', ()=> {
   test('200 OK', async ()=> {
     await request(server).post('/api/auth/register').send(user2)
     const login = await request(server).post('/api/auth/login').send(user2)
-    const res = await request(server).get('/api/jokes').send({Authorization: login.body.token})
+    const token = login.body.token
+    const res = await request(server).get('/api/jokes').set('Authorization', token)
     expect(res.status).toBe(200)
   })
   test('responds with all jokes', async ()=> {
     const login = await request(server).post('/api/auth/login').send(user2)
-    const res = await request(server).get('/api/jokes').send({Authorization: login.body.token})
+    const token = login.body.token
+    const res = await request(server).get('/api/jokes').set('Authorization', token)
     expect(res.body).toHaveLength(3)
   })
 })
